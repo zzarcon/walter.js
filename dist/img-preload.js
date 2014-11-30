@@ -26,6 +26,15 @@
  */
 
 (function(exports) {
+  var config = {
+    path: ''
+  };
+
+  Promise.prototype.progress = function(handler) {
+    this.progressHandler = handler;
+    return this;
+  };
+
   function ImgPreload(images, options) {
     if (!images) {
       return new Error('ImgPreload requires a image or a array of images');
@@ -40,9 +49,19 @@
     return all(promises);
   }
 
-  function preloadImage(path) {
-    return new Promise(function(resolve, reject) {
+  ImgPreload.config = function(userConfig) {
+    config = userConfig;
+  };
 
+  function preloadImage(url) {
+    return new Promise(function(resolve, reject) {
+      var img = new Image();
+      img.src = config.path + url;
+
+      img.onerror = reject;
+      img.onload = function() {
+        resolve(img);
+      };
     });
   }
 
@@ -51,13 +70,20 @@
     var resolvedPromises = 0;
 
     return new Promise(function(resolve, reject) {
-      function onFulfillement() {
+      var images = [];
+
+      function onFulfillement(img) {
+        images.push(img);
         resolvedPromises++;
-        resolvedPromises === promisesToResolve && resolve();
+        resolvedPromises === promisesToResolve && resolve(images);
+      }
+
+      function onCatch() {
+        reject();
       }
 
       promises.forEach(function(promise) {
-        promise.then(onFulfillement);
+        promise.then(onFulfillement).catch(onCatch);
       });
     });
   }

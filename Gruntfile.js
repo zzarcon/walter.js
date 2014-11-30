@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     watch: {
       app: {
-        files: ['dist/img-preload.js'],
+        files: ['dist/img-preload.js', 'sample-app/demo.js'],
         options: {
           livereload: true
         }
