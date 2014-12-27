@@ -30,14 +30,9 @@
     path: ''
   };
 
-  Promise.prototype.progress = function(handler) {
-    this.progressHandler = handler;
-    return this;
-  };
-
-  function ImgPreload(images, options) {
+  function Walter(images, options) {
     if (!images) {
-      return new Error('ImgPreload requires a image or a array of images');
+      return new Error('Walter requires a image or array of images');
     }
 
     images = typeof images === 'string' ? [images] : images;
@@ -49,14 +44,10 @@
     return all(promises);
   }
 
-  ImgPreload.config = function(userConfig) {
-    config = userConfig;
-  };
-
   function preloadImage(url) {
     return new Promise(function(resolve, reject) {
       var img = new Image();
-      img.src = config.path + url;
+      img.src = [config.path, url].join('/');
 
       img.onerror = reject;
       img.onload = function() {
@@ -68,25 +59,35 @@
   function all(promises) {
     var promisesToResolve = promises.length;
     var resolvedPromises = 0;
+    var progressHandler = function() {};
 
-    return new Promise(function(resolve, reject) {
+    var promise = new Promise(function(resolve, reject) {
       var images = [];
 
       function onFulfillement(img) {
+        progressHandler(images.length, img);
         images.push(img);
         resolvedPromises++;
         resolvedPromises === promisesToResolve && resolve(images);
       }
 
-      function onCatch() {
-        reject();
-      }
-
       promises.forEach(function(promise) {
-        promise.then(onFulfillement).catch(onCatch);
+        promise.then(onFulfillement).catch(function() {
+          reject(promise);
+        });
       });
     });
+
+    promise.progress = function(callback) {
+      progressHandler = callback;
+    };
+
+    return promise;
   }
 
-  exports.ImgPreload = ImgPreload;
+  Walter.config = function(userConfig) {
+    config = userConfig;
+  };
+
+  exports.Walter = Walter;
 })(window);

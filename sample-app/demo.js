@@ -4,16 +4,19 @@
   var arr = [img1, img2];
   var images = arr;
 
-  ImgPreload.config({
-    path: 'assets/images/'
+  Walter.config({
+    path: 'assets/images'
   });
 
-  var promise = ImgPreload(images);
+  window.promise = Walter(images);
+
+  promise.progress(function(index, img) {
+    console.log(index, img);
+  });
   promise.then(function(images) {
     console.log('then', images);
-  }).progress(function(index, img) {
-    console.log('progress');
-  }).catch(function() {
-    console.log('catch');
+  });
+  promise.catch(function(promise) {
+    console.log('catch', promise);
   });
 })();
