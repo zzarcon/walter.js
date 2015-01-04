@@ -16,13 +16,38 @@ module.exports = function(grunt) {
           port: 9092,
           base: ['.', 'dist', 'sample-app']
         }
+      },
+      test: {
+        options: {
+          port: 9092,
+          base: ['.', 'test']
+        }
+      }
+    },
+    uglify: {
+      build: {
+        src: ['dist/walter.js'],
+        dest: 'dist/walter.min.js'
+      }
+    },
+    qunit: {
+      all: {
+        options: {
+          urls: [
+            'http://localhost:9092/index.html'
+          ],
+          force: true
+        }
       }
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-qunit');
 
-  // grunt.registerTask('compile', ['concat']);
+  grunt.registerTask('release', ['uglify']);
+  grunt.registerTask('test', ['connect:test', 'qunit']);
   grunt.registerTask('default', ['connect:app', 'watch']);
 };
