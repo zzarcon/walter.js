@@ -1,4 +1,4 @@
-ImgPreload
+Walter.js
 =============
 
 
@@ -21,6 +21,5 @@ ImgPreload
 None
 ### TODO
 
-- [ ] Implement "step" method
 - [ ] Add unit tests
 - [ ] Add comments to code

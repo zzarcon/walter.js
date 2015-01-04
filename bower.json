@@ -1,23 +1,24 @@
 {
-  "name": "Focusable element",
+  "name": "Walter",
   "version": "0.1",
   "authors": [
     "zzarcon"
   ],
-  "description": "Set focus on DOM element adding overlay to the rest of the page",
-  "main": "app/focus-element-overlay.js",
+  "description": "",
+  "main": "dist/walter.js",
   "keywords": [
     "javascript",
-    "focus",
-    "dom",
-    "element",
-    "overlay",
-    "spotlight"
+    "walter",
+    "img",
+    "image",
+    "load",
+    "preload",
+    "promise"
   ],
   "license": "MIT",
-  "homepage": "www.github.com/zzarcon/focus-element-overlay",
+  "homepage": "https://github.com/zzarcon/walter.js",
   "ignore": [
     "sample-app",
-    "gulpfile.js"
+    "Gruntfile.js"
   ]
 }

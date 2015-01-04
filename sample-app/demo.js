@@ -8,7 +8,7 @@
     path: 'assets/images'
   });
 
-  window.promise = Walter(images);
+  var promise = Walter(images);
 
   promise.progress(function(index, img) {
     console.log(index, img);
