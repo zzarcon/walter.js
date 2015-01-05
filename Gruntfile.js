@@ -8,6 +8,12 @@ module.exports = function(grunt) {
         options: {
           livereload: true
         }
+      },
+      test: {
+        files: ['dist/walter.js', 'test/tests.js'],
+        options: {
+          livereload: true
+        }
       }
     },
     connect: {
@@ -49,5 +55,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('release', ['uglify']);
   grunt.registerTask('test', ['connect:test', 'qunit']);
+  grunt.registerTask('watch_test', ['connect:test', 'qunit', 'watch:test']);
   grunt.registerTask('default', ['connect:app', 'watch']);
 };
