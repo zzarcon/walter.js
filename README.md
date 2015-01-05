@@ -51,9 +51,10 @@ Walter.config({
 None :D
 
 ### How to Run Unit Tests
+* npm install
+* grunt test
 
 ### TODO
 
-- [ ] Add unit tests
 - [ ] Add RSVP library for support old browsers
-- [ ] Add comments to code
+- [ ] Document code
