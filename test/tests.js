@@ -12,7 +12,6 @@
   });
 
   test("Preload one image", function(assert) {
-    console.log(window.Promise);
     ok(1 == 1, true)
   });
 
@@ -33,7 +32,7 @@
 
   test("Preload multiple images", function(assert) {
     var done = assert.async();
-    console.log(Promise);
+
     Walter([img1, img2]).then(function(images) {
       assert.ok(images.length === 2, true);
       done();
